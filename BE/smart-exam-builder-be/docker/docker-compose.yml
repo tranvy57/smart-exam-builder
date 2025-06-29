@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  redis:
+    image: redis
+    container_name: redis-chat-cache
+    ports:
+      - "6379:6379"
+
+  postgres:
+    image: postgres:15
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: adminpassword
+      POSTGRES_DB: smartexam_db
+    ports:
+      - "5432:5432"
+    restart: always
+
