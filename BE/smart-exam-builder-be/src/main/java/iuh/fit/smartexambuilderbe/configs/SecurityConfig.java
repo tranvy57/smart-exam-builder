@@ -27,11 +27,10 @@ import java.util.List;
 @EnableMethodSecurity
 public class SecurityConfig {
 
-    private final String[] PUBLIC_ENDPOINTS = {"/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh", "/users"
+    private final String[] PUBLIC_ENDPOINTS = {"/auth/login", "/auth/introspect", "/auth/logout", "/auth/refresh", "/swagger-ui/**", "/v3/api-docs/**", "/users/**"
     };
 
     private final String[] ADMIN_ENDPOINTS = {"/users"
-
     };
 
     @Autowired
@@ -42,11 +41,11 @@ public class SecurityConfig {
         httpSecurity
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
-                        request -> request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
-                                .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
+                        request -> request
                                 .requestMatchers(HttpMethod.GET, ADMIN_ENDPOINTS).hasRole("ADMIN")
-                                .anyRequest().permitAll());
-
+                                .requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINTS).permitAll()
+                                .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINTS).permitAll()
+                                );
         httpSecurity.oauth2ResourceServer(oauth2 -> oauth2.jwt(jwtConfigurer -> jwtConfigurer
                         .decoder(customJwtDecoder)
                         .jwtAuthenticationConverter(jwtAuthenticationConverter()))

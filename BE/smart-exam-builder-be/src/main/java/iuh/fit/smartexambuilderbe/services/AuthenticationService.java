@@ -137,7 +137,7 @@ public class AuthenticationService {
                 .issueTime(new Date())
                 .expirationTime(new Date(Instant.now().plus(VALID_DURATION, ChronoUnit.SECONDS).toEpochMilli()))
                 .jwtID(UUID.randomUUID().toString())
-                .claim("scope", buildScope(user))
+                .claim("scope", user.getRole())
                 .build();
 
         Payload payload = new Payload(jwtClaimsSet.toJSONObject());
@@ -187,11 +187,11 @@ public class AuthenticationService {
         return signedJWT;
     }
 
-    private String buildScope(User user) {
-        if (user.getRole() == null) {
-            return "";
-        }
-
-        return "ROLE_" + user.getRole().name();
-    }
+//    private String buildScope(User user) {
+//        if (user.getRole() == null) {
+//            return "";
+//        }
+//
+//        return "ROLE_" + user.getRole().name();
+//    }
 }

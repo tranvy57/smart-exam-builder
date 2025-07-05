@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 @ControllerAdvice
@@ -18,7 +19,7 @@ public class GlobalException {
     }
 
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<ErrorMessageDto> BadrequestException(BadRequestException exc) {
+    public ResponseEntity<ErrorMessageDto> BadRequestException(BadRequestException exc) {
         ApiResponse<Boolean> error = new ApiResponse<>(HttpStatus.BAD_REQUEST.value(), exc.getMessage(), false);
         ErrorMessageDto errorDto = new ErrorMessageDto(error.getStatusCode(), error.getMessage());
         return new ResponseEntity<>(errorDto, HttpStatus.BAD_REQUEST);

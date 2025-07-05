@@ -33,8 +33,8 @@ public class UserRegisterRequest {
 
     @NotBlank
     private String phone;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM/dd/yyyy")
+    @DateTimeFormat(pattern = "MM/dd/yyyy")
     LocalDate dob;
 
     String role;
